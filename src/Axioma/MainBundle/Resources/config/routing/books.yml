@@ -1,0 +1,30 @@
+books:
+    pattern:  /
+    defaults: { _controller: "AxiomaMainBundle:Books:index" }
+
+books_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "AxiomaMainBundle:Books:show" }
+
+books_new:
+    pattern:  /new
+    defaults: { _controller: "AxiomaMainBundle:Books:new" }
+
+books_create:
+    pattern:  /create
+    defaults: { _controller: "AxiomaMainBundle:Books:create" }
+    requirements: { _method: post }
+
+books_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "AxiomaMainBundle:Books:edit" }
+
+books_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "AxiomaMainBundle:Books:update" }
+    requirements: { _method: post|put }
+
+books_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "AxiomaMainBundle:Books:delete" }
+    requirements: { _method: post|delete }

@@ -1,0 +1,30 @@
+movies:
+    pattern:  /
+    defaults: { _controller: "AxiomaMainBundle:Movies:index" }
+
+movies_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "AxiomaMainBundle:Movies:show" }
+
+movies_new:
+    pattern:  /new
+    defaults: { _controller: "AxiomaMainBundle:Movies:new" }
+
+movies_create:
+    pattern:  /create
+    defaults: { _controller: "AxiomaMainBundle:Movies:create" }
+    requirements: { _method: post }
+
+movies_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "AxiomaMainBundle:Movies:edit" }
+
+movies_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "AxiomaMainBundle:Movies:update" }
+    requirements: { _method: post|put }
+
+movies_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "AxiomaMainBundle:Movies:delete" }
+    requirements: { _method: post|delete }

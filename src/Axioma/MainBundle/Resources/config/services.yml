@@ -1,0 +1,7 @@
+parameters:
+#    axioma_main.example.class: Axioma\MainBundle\Example
+
+services:
+#    axioma_main.example:
+#        class: %axioma_main.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

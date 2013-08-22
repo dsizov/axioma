@@ -1,0 +1,3 @@
+axioma_main:
+    resource: "@AxiomaMainBundle/Resources/config/routing.yml"
+    prefix:   /
