@@ -4,7 +4,15 @@
     <h1>Movies creation</h1>
 
     <form action="{{ path('movies_create') }}" method="post" {{ form_enctype(form) }}>
-        {{ form_widget(form) }}
+        {{ form_errors(form) }}
+        {{ form_row(form.title) }}
+        {{ form_row(form.description) }}
+        {{ form_row(form.quality) }}
+        {{ form_row(form.actor) }}
+        <ul class="new_actor" data-prototype="{{ form_widget(form.new_actor.vars.prototype)|e }}"></ul>
+        {{ form_row(form.tag) }}
+        <ul class="new_tag" data-prototype="{{ form_widget(form.new_tag.vars.prototype)|e }}"></ul>
+        {{ form_rest(form) }}
         <p>
             <button type="submit">Create</button>
         </p>

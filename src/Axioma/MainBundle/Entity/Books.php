@@ -38,7 +38,7 @@ class Books
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Authors", inversedBy="book")
+     * @ORM\ManyToMany(targetEntity="Authors", inversedBy="book", cascade={"persist"})
      * @ORM\JoinTable(name="book_has_author",
      *   joinColumns={
      *     @ORM\JoinColumn(name="book_id", referencedColumnName="id")
@@ -53,7 +53,7 @@ class Books
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Tags", inversedBy="book")
+     * @ORM\ManyToMany(targetEntity="Tags", inversedBy="book", cascade={"persist"})
      * @ORM\JoinTable(name="book_has_tag",
      *   joinColumns={
      *     @ORM\JoinColumn(name="book_id", referencedColumnName="id")
@@ -62,6 +62,7 @@ class Books
      *     @ORM\JoinColumn(name="tag_id", referencedColumnName="id")
      *   }
      * )
+     *
      */
     private $tag;
 
@@ -195,5 +196,67 @@ class Books
     public function getTag()
     {
         return $this->tag;
+    }
+
+    /**
+     * @param Tags $tag
+     * @return $this
+     */
+    public function addNewTag(\Axioma\MainBundle\Entity\Tags $tag)
+    {
+        $tag->getBook($this);
+
+        $this->tag[] = $tag;
+
+        return $this;
+    }
+
+    public function getNewTag() {}
+
+    /**
+     * @param Tags $tag
+     */
+    public function setNewTag(\Axioma\MainBundle\Entity\Tags $tag)
+    {
+        $this->addTag($tag);
+    }
+
+    /**
+     * @param Tags $tag
+     */
+    public function removeNewTag(\Axioma\MainBundle\Entity\Tags $tag)
+    {
+        $this->tag->removeElement($tag);
+    }
+
+    /**
+     * @param Authors $author
+     * @return $this
+     */
+    public function addNewAuthor(\Axioma\MainBundle\Entity\Authors $author)
+    {
+        $author->getBook($this);
+
+        $this->author[] = $author;
+
+        return $this;
+    }
+
+    public function getNewAuthor() {}
+
+    /**
+     * @param Authors $author
+     */
+    public function setNewauthor(\Axioma\MainBundle\Entity\Authors $author)
+    {
+        $this->addauthor($author);
+    }
+
+    /**
+     * @param Authors $author
+     */
+    public function removeNewAuthor(\Axioma\MainBundle\Entity\Authors $author)
+    {
+        $this->author->removeElement($author);
     }
 }

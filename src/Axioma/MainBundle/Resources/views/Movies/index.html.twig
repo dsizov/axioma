@@ -10,6 +10,8 @@
                 <th>Title</th>
                 <th>Description</th>
                 <th>Quality</th>
+                <th>Actor</th>
+                <th>Tag</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -20,6 +22,16 @@
                 <td>{{ entity.title }}</td>
                 <td>{{ entity.description }}</td>
                 <td>{{ entity.quality }}</td>
+                <td>
+                {% for actor in entity.actor %}
+                    {{ actor.name }}{% if not loop.last %},{% endif %}
+                {% endfor %}
+                </td>
+                <td>
+                {% for tag in entity.tag %}
+                    {{ tag.name }}{% if not loop.last %},{% endif %}
+                {% endfor %}
+                <td>
                 <td>
                 <ul>
                     <li>

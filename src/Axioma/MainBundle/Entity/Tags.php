@@ -93,8 +93,10 @@ class Tags
      */
     public function addBook(\Axioma\MainBundle\Entity\Books $book)
     {
-        $this->book[] = $book;
-    
+        if (!$this->book->contains($book)) {
+            $this->book[] = $book;
+        }
+
         return $this;
     }
 
@@ -149,5 +151,10 @@ class Tags
     public function getMovie()
     {
         return $this->movie;
+    }
+
+    public function __toString()
+    {
+        return $this->getName();
     }
 }

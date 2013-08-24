@@ -12,6 +12,13 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Movies
 {
+    const QUALITY_DVDRIP = 'dvdrip';
+    const QUALITY_HDRIP = 'hdrip';
+    const QUALITY_BDRIP = 'bdrip';
+    const QUALITY_720P = '720p';
+    const QUALITY_1080P = '1080p';
+    const QUALITY_DVD5 = 'dvd5';
+
     /**
      * @var integer
      *
@@ -38,14 +45,14 @@ class Movies
     /**
      * @var string
      *
-     * @ORM\Column(name="quality", type="string", nullable=false)
+     * @ORM\Column(name="quality", type="string", nullable=false, columnDefinition="ENUM('dvdrip', 'hdrip', 'bdrip', '720p', '1080p', 'dvd5')")
      */
     private $quality;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Actors", inversedBy="movie")
+     * @ORM\ManyToMany(targetEntity="Actors", inversedBy="movie", cascade={"persist"})
      * @ORM\JoinTable(name="movie_has_actor",
      *   joinColumns={
      *     @ORM\JoinColumn(name="movie_id", referencedColumnName="id")
@@ -60,7 +67,7 @@ class Movies
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Tags", inversedBy="movie")
+     * @ORM\ManyToMany(targetEntity="Tags", inversedBy="movie", cascade={"persist"})
      * @ORM\JoinTable(name="movie_has_tag",
      *   joinColumns={
      *     @ORM\JoinColumn(name="movie_id", referencedColumnName="id")
@@ -225,5 +232,79 @@ class Movies
     public function getTag()
     {
         return $this->tag;
+    }
+
+    /**
+     * @param Tags $tag
+     * @return $this
+     */
+    public function addNewTag(\Axioma\MainBundle\Entity\Tags $tag)
+    {
+        $tag->getMovie($this);
+
+        $this->tag[] = $tag;
+
+        return $this;
+    }
+
+    public function getNewTag() {}
+
+    /**
+     * @param Tags $tag
+     */
+    public function setNewTag(\Axioma\MainBundle\Entity\Tags $tag)
+    {
+        $this->addTag($tag);
+    }
+
+    /**
+     * @param Tags $tag
+     */
+    public function removeNewTag(\Axioma\MainBundle\Entity\Tags $tag)
+    {
+        $this->tag->removeElement($tag);
+    }
+
+    /**
+     * @param Authors $author
+     * @return $this
+     */
+    public function addNewActor(\Axioma\MainBundle\Entity\Actors $actor)
+    {
+        $actor->getMovie($this);
+
+        $this->actor[] = $actor;
+
+        return $this;
+    }
+
+    public function getNewActor() {}
+
+    /**
+     * @param actors $actor
+     */
+    public function setNewActor(\Axioma\MainBundle\Entity\Actors $actor)
+    {
+        $this->addActor($actor);
+    }
+
+    /**
+     * @param actors $actor
+     */
+    public function removeNewActor(\Axioma\MainBundle\Entity\Actors $actor)
+    {
+        $this->actor->removeElement($actor);
+    }
+
+    public static function getQualityList()
+    {
+        return array(
+            self::QUALITY_DVDRIP => self::QUALITY_DVDRIP,
+            self::QUALITY_HDRIP => self::QUALITY_HDRIP,
+            self::QUALITY_BDRIP => self::QUALITY_BDRIP,
+            self::QUALITY_720P => self::QUALITY_720P,
+            self::QUALITY_1080P => self::QUALITY_1080P,
+            self::QUALITY_DVD5 => self::QUALITY_DVD5
+        );
     }
 }

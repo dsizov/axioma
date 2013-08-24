@@ -5,6 +5,7 @@ namespace Axioma\MainBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Axioma\MainBundle\Entity\Movies;
 
 class MoviesType extends AbstractType
 {
@@ -13,9 +14,35 @@ class MoviesType extends AbstractType
         $builder
             ->add('title')
             ->add('description')
-            ->add('quality')
-            ->add('actor')
-            ->add('tag')
+            ->add('quality', 'choice', array(
+                'choices' => Movies::getQualityList()
+            ))
+            ->add('actor', 'entity', array(
+                'class' => 'AxiomaMainBundle:Actors',
+                'multiple' => true,
+                'property' => 'name',
+                'expanded' => true,
+                'required' => false
+            ))
+            ->add('new_actor', 'collection', array(
+                'label' => false,
+                'type' => new ActorsType(),
+                'allow_add' => true,
+                'by_reference' => false
+            ))
+            ->add('tag', 'entity', array(
+                'class' => 'AxiomaMainBundle:Tags',
+                'multiple' => true,
+                'property' => 'name',
+                'expanded' => true,
+                'required' => false
+            ))
+            ->add('new_tag', 'collection', array(
+                'label' => false,
+                'type' => new TagsType(),
+                'allow_add' => true,
+                'by_reference' => false
+            ))
         ;
     }
 

@@ -17,6 +17,22 @@
                 <th>Description</th>
                 <td>{{ entity.description }}</td>
             </tr>
+            <tr>
+                <th>Author</th>
+                <td>
+                {% for author in entity.author %}
+                    {{ author.name }}{% if not loop.last %},{% endif %}
+                {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <th>Tag</th>
+                <td>
+                {% for tag in entity.tag %}
+                    {{ tag.name }}{% if not loop.last %},{% endif %}
+                {% endfor %}
+                </td>
+            </tr>
         </tbody>
     </table>
 

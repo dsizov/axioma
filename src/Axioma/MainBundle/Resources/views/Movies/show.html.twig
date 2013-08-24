@@ -21,6 +21,22 @@
                 <th>Quality</th>
                 <td>{{ entity.quality }}</td>
             </tr>
+            <tr>
+                <th>Actor</th>
+                <td>
+                {% for actor in entity.actor %}
+                    {{ actor.name }}{% if not loop.last %},{% endif %}
+                {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <th>Tag</th>
+                <td>
+                {% for tag in entity.tag %}
+                    {{ tag.name }}{% if not loop.last %},{% endif %}
+                {% endfor %}
+                </td>
+            </tr>
         </tbody>
     </table>
 
