@@ -2,6 +2,15 @@ homepage:
     pattern: /
     defaults: { _controller: AxiomaMainBundle:Main:index }
 
+homepage_locale:
+    pattern: /{_locale}/
+    defaults: { _controller: AxiomaMainBundle:Main:index }
+    requirements:
+            _locale: en|fr|ru|de
+
+
 axioma_main:
     resource: "@AxiomaMainBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /{_locale}
+    requirements:
+            _locale: en|fr|ru|de

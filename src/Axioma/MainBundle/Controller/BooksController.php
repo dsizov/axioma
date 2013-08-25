@@ -86,7 +86,8 @@ class BooksController extends Controller
 
         return $this->render('AxiomaMainBundle:Books:show.html.twig', array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        ));
+            'delete_form' => $deleteForm->createView()
+        ));
     }
 
     /**

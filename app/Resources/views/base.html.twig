@@ -10,8 +10,15 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        <a href="/books">Books</a>
-        <a href="/movies">Movies</a>
+        <a href="/{{ locale }}/books">Books</a>
+        <a href="/{{ locale }}/movies">Movies</a>
+        |
+        {% set href = path(app.request.attributes.get('_route'),app.request.attributes.get('_route_params'))|slice(4) %}
+        <a href="/en/{{ href }}">en</a>
+        <a href="/fr/{{ href }}">fr</a>
+        <a href="/ru/{{ href }}">ru</a>
+        <a href="/de/{{ href }}">de</a>
+
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>
