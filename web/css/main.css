@@ -1,0 +1,20 @@
+.records_list {
+    border: 1px double;
+    border-collapse: collapse;
+}
+
+.records_list th {
+    text-align: left;
+    background: #ccc;
+    padding: 5px;
+    border: 1px solid black;
+}
+.records_list td {
+    padding: 5px;
+    border: 1px solid black;
+    max-width: 120px;
+}
+
+.a2lix_translationsTabs td {
+    width: 70px;
+}

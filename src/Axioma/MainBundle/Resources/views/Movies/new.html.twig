@@ -1,11 +1,14 @@
 {% extends '::base.html.twig' %}
+{% form_theme form 'form_table_layout.html.twig'  %}
 
 {% block body -%}
     <h1>Movies creation</h1>
 
     <form action="{{ path('movies_create') }}" method="post" {{ form_enctype(form) }}>
         {{ form_errors(form) }}
-        {{ form_widget(form.translations, {'fields': [form.title, form.description]}) }}
+        {{ form_row(form.title) }}<br/>
+        {{ form_row(form.description) }}<br/><br/>
+        {{ form_row(form.translations) }}
         {{ form_row(form.quality) }}
         {{ form_row(form.actor) }}
         <ul class="new_actor" data-prototype="{{ form_widget(form.new_actor.vars.prototype)|e }}"></ul>
