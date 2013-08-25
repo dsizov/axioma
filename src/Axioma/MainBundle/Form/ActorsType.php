@@ -12,6 +12,24 @@ class ActorsType extends AbstractType
     {
         $builder
             ->add('name')
+            ->add('translations', 'a2lix_translations', array(
+                'fields' => array(
+                    'name' => array(
+                        'label' => 'Name',
+                        'locale_options' => array(
+                            'ru' => array(
+                                'label' => 'Имя'
+                            ),
+                            'fr' => array(
+                                'label' => 'Nom'
+                            ),
+                            'de' => array(
+                                'label' => 'Name'
+                            ),
+                        )
+                    )
+                )
+            ))
         ;
     }
 

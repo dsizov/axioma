@@ -5,13 +5,13 @@
 
     <form action="{{ path('books_create') }}" method="post" {{ form_enctype(form) }}>
         {{ form_errors(form) }}
-        {{ form_row(form.title) }}
-        {{ form_row(form.description) }}
-        {{ form_row(form.author) }}
+        {{ form_widget(form.translations, {'fields': [form.title, form.description]}) }}
+        {{ form_row(form.author) }}<br/>
         <ul class="new_author" data-prototype="{{ form_widget(form.new_author.vars.prototype)|e }}"></ul>
         {{ form_row(form.tag) }}
         <ul class="new_tag" data-prototype="{{ form_widget(form.new_tag.vars.prototype)|e }}"></ul>
         {{ form_rest(form) }}
+
         <p>
             <button type="submit">Create</button>
         </p>

@@ -3,11 +3,14 @@
 namespace Axioma\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Movies
  *
  * @ORM\Table(name="movies")
+ * @Gedmo\TranslationEntity(class="Axioma\MainBundle\Entity\Translation\MoviesTranslation")
  * @ORM\Entity
  */
 class Movies
@@ -32,6 +35,7 @@ class Movies
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255, nullable=false)
+     * @Gedmo\Translatable
      */
     private $title;
 
@@ -39,6 +43,7 @@ class Movies
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=true)
+     * @Gedmo\Translatable
      */
     private $description;
 
@@ -80,12 +85,23 @@ class Movies
     private $tag;
 
     /**
+     * @ORM\OneToMany(
+     *     targetEntity="Axioma\MainBundle\Entity\Translation\MoviesTranslation",
+     *  mappedBy="object",
+     *  cascade={"persist", "remove"}
+     * )
+     * @Assert\Valid(deep = true)
+     */
+    private $translations;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->actor = new \Doctrine\Common\Collections\ArrayCollection();
         $this->tag = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->translations = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
 
@@ -306,5 +322,31 @@ class Movies
             self::QUALITY_1080P => self::QUALITY_1080P,
             self::QUALITY_DVD5 => self::QUALITY_DVD5
         );
+    }
+
+    /**
+     * Set translations
+     *
+     * @param ArrayCollection $translations
+     * @return Books
+     */
+    public function setTranslations($translations)
+    {
+        foreach ($translations as $translation) {
+            $translation->setObject($this);
+        }
+
+        $this->translations = $translations;
+        return $this;
+    }
+
+    /**
+     * Get translations
+     *
+     * @return ArrayCollection
+     */
+    public function getTranslations()
+    {
+        return $this->translations;
     }
 }

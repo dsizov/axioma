@@ -5,8 +5,7 @@
 
     <form action="{{ path('movies_create') }}" method="post" {{ form_enctype(form) }}>
         {{ form_errors(form) }}
-        {{ form_row(form.title) }}
-        {{ form_row(form.description) }}
+        {{ form_widget(form.translations, {'fields': [form.title, form.description]}) }}
         {{ form_row(form.quality) }}
         {{ form_row(form.actor) }}
         <ul class="new_actor" data-prototype="{{ form_widget(form.new_actor.vars.prototype)|e }}"></ul>

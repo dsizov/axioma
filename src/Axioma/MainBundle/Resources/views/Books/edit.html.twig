@@ -6,8 +6,7 @@
     <form action="{{ path('books_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
         <input type="hidden" name="_method" value="PUT" />
         {{ form_errors(edit_form) }}
-        {{ form_row(edit_form.title) }}
-        {{ form_row(edit_form.description) }}
+        {{ form_widget(edit_form.translations, {'fields': [edit_form.title, edit_form.description]}) }}
         {{ form_row(edit_form.author) }}
         <ul class="new_author" data-prototype="{{ form_widget(edit_form.new_author.vars.prototype)|e }}"></ul>
         {{ form_row(edit_form.tag) }}

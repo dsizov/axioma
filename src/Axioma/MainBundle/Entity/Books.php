@@ -3,11 +3,14 @@
 namespace Axioma\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Books
  *
  * @ORM\Table(name="books")
+ * @Gedmo\TranslationEntity(class="Axioma\MainBundle\Entity\Translation\BooksTranslation")
  * @ORM\Entity
  */
 class Books
@@ -25,6 +28,7 @@ class Books
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255, nullable=false)
+     * @Gedmo\Translatable
      */
     private $title;
 
@@ -32,6 +36,7 @@ class Books
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=true)
+     * @Gedmo\Translatable
      */
     private $description;
 
@@ -62,9 +67,18 @@ class Books
      *     @ORM\JoinColumn(name="tag_id", referencedColumnName="id")
      *   }
      * )
-     *
      */
     private $tag;
+
+    /**
+     * @ORM\OneToMany(
+     *     targetEntity="Axioma\MainBundle\Entity\Translation\BooksTranslation",
+     *  mappedBy="object",
+     *  cascade={"persist", "remove"}
+     * )
+     * @Assert\Valid(deep = true)
+     */
+    private $translations;
 
     /**
      * Constructor
@@ -73,6 +87,7 @@ class Books
     {
         $this->author = new \Doctrine\Common\Collections\ArrayCollection();
         $this->tag = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->translations = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
 
@@ -258,5 +273,31 @@ class Books
     public function removeNewAuthor(\Axioma\MainBundle\Entity\Authors $author)
     {
         $this->author->removeElement($author);
+    }
+
+    /**
+     * Set translations
+     *
+     * @param ArrayCollection $translations
+     * @return Books
+     */
+    public function setTranslations($translations)
+    {
+        foreach ($translations as $translation) {
+            $translation->setObject($this);
+        }
+
+        $this->translations = $translations;
+        return $this;
+    }
+
+    /**
+     * Get translations
+     *
+     * @return ArrayCollection
+     */
+    public function getTranslations()
+    {
+        return $this->translations;
     }
 }

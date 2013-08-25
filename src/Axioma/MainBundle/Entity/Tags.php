@@ -3,11 +3,14 @@
 namespace Axioma\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Tags
  *
  * @ORM\Table(name="tags")
+ * @Gedmo\TranslationEntity(class="Axioma\MainBundle\Entity\Translation\TagsTranslation")
  * @ORM\Entity
  */
 class Tags
@@ -25,6 +28,7 @@ class Tags
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=45, nullable=false)
+     * @Gedmo\Translatable
      */
     private $name;
 
@@ -43,12 +47,23 @@ class Tags
     private $movie;
 
     /**
+     * @ORM\OneToMany(
+     *     targetEntity="Axioma\MainBundle\Entity\Translation\TagsTranslation",
+     *  mappedBy="object",
+     *  cascade={"persist", "remove"}
+     * )
+     * @Assert\Valid(deep = true)
+     */
+    private $translations;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->book = new \Doctrine\Common\Collections\ArrayCollection();
         $this->movie = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->translations = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
 
@@ -156,5 +171,31 @@ class Tags
     public function __toString()
     {
         return $this->getName();
+    }
+
+    /**
+     * Set translations
+     *
+     * @param ArrayCollection $translations
+     * @return Tags
+     */
+    public function setTranslations($translations)
+    {
+        foreach ($translations as $translation) {
+            $translation->setObject($this);
+        }
+
+        $this->translations = $translations;
+        return $this;
+    }
+
+    /**
+     * Get translations
+     *
+     * @return ArrayCollection
+     */
+    public function getTranslations()
+    {
+        return $this->translations;
     }
 }

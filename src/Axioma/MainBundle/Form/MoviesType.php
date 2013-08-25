@@ -43,6 +43,7 @@ class MoviesType extends AbstractType
                 'allow_add' => true,
                 'by_reference' => false
             ))
+            ->add('translations', 'a2lix_translations')
         ;
     }
 
