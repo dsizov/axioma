@@ -10,8 +10,12 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        <a href="/{{ locale }}/books">Books</a>
-        <a href="/{{ locale }}/movies">Movies</a>
+        {% set locale_url = path(app.request.attributes.get('_route'),app.request.attributes.get('_route_params'))|slice(0,3) %}
+        {% if locale_url != '/' %}
+            {% set locale = locale_url %}
+        {% endif %}
+        <a href="{{ locale }}/books">Books</a>
+        <a href="{{ locale }}/movies">Movies</a>
         |
         {% set href = path(app.request.attributes.get('_route'),app.request.attributes.get('_route_params'))|slice(4) %}
         <a href="/en/{{ href }}">en</a>
