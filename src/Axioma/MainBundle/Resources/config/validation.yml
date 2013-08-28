@@ -1,0 +1,17 @@
+Axioma\MainBundle\Entity\Books:
+  constraints:
+      - Callback:
+          methods:   [isRelatedObjectsValid]
+  properties:
+    title:
+      - NotBlank: ~
+
+Axioma\MainBundle\Entity\Movies:
+  constraints:
+      - Callback:
+          methods:   [isRelatedObjectsValid]
+  properties:
+    title:
+      - NotBlank: ~
+    quality:
+      - NotBlank: ~

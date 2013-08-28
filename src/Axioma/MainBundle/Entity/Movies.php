@@ -5,6 +5,7 @@ namespace Axioma\MainBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\ExecutionContextInterface;
 
 /**
  * Movies
@@ -348,5 +349,20 @@ class Movies
     public function getTranslations()
     {
         return $this->translations;
+    }
+
+    public function isRelatedObjectsValid(ExecutionContextInterface $context)
+    {
+        foreach ($this->getActor() as $actor) {
+            if ($actor->getName() == '') {
+                $context->addViolationAt('name', 'Actor name can\'t be empty');
+            }
+        }
+
+        foreach ($this->getTag() as $tag) {
+            if ($tag->getName() == '') {
+                $context->addViolationAt('name', 'Tag name can\'t be empty');
+            }
+        }
     }
 }
